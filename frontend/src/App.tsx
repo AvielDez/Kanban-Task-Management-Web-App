@@ -1,32 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
+import React from 'react'
+
+import useStore from './bearStore'
+import Button from './Button'
+import Header from './components/Header/Header'
+import Task from './components/Task'
+import Column from './components/Column'
+import SideBar from './components/SideBar/SideBar'
+import AddTaskModal from './components/AddTaskModal'
+import AddBoardModal from './components/AddBoardModel'
+import EditTaskModal from './components/EditTaskModal'
+import ViewTaskModal from './components/ViewTaskModal'
+import DeleteModal from './components/DeleteModal'
+import EditPopOut from './components/EditPopOut'
+
+import { set } from 'react-hook-form'
+import { modalBackground } from './styles/modalStyle'
+import { flex } from './styles/utilStyle'
+
+const boardStyle = css `
+  position: absolute;
+  left: 0;
+  top: 6rem;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  padding: 1.5rem 2rem;
+  cursor: move;
+  overflow: scroll;
+
+  @media (min-width: 768px) {
+    top: 81px;
+    left: 18.75rem;
+  }
+`
+
 
 function App() {
-  const [count, setCount] = useState(0)
+ 
+  const isModalOpen = false;
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div>
+      {isModalOpen && <div css={modalBackground}></div>}
+      <Header/>
+      {/* {<EditPopOut item='task' />} */}
+      <main>
+        <SideBar/>
+        <div css={boardStyle}>
+          <Column status="Todo">
+            <Task taskId={78}/>
+            <Task taskId={34}/>
+            <Task taskId={23}/>
+            <Task taskId={14}/>
+          </Column>
+          <Column status="Doing">
+            <Task taskId={78}/>
+            <Task taskId={34}/>
+            <Task taskId={23}/>
+            <Task taskId={14}/>
+            <Task taskId={65}/>
+            <Task taskId={89}/>
+          </Column>
+          <Column status="Done">
+            <Task taskId={78}/>
+            <Task taskId={34}/>
+            <Task taskId={14}/>
+          </Column>
+        </div>
+      </main>
     </div>
   )
 }
